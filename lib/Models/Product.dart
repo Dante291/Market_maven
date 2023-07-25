@@ -3,14 +3,14 @@ class Product {
   final String title;
   final String description;
   final String imageUrl;
-  final double amount;
+  final double price;
   bool isfav;
 
   Product(
-      {required this.isfav,
+      {this.isfav = false,
       required this.id,
       required this.title,
       required this.description,
       required this.imageUrl,
-      required this.amount});
+      required this.price});
 }
