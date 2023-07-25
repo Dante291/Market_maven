@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/Screens/product_detail_screen.dart';
 import 'package:shop_app/Widgets/like_button.dart';
 
 class productItem extends StatefulWidget {
@@ -31,20 +32,26 @@ class _productItemState extends State<productItem> {
       ClipRRect(
         borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-        child: GridTile(
-          footer: GridTileBar(
-            backgroundColor: Colors.black54,
-            title: Text(
-              widget.productTitle,
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context)
+                .pushNamed(productDetailScreen.routeName, arguments: widget.id);
+          },
+          child: GridTile(
+            footer: GridTileBar(
+              backgroundColor: Colors.black54,
+              title: Text(
+                widget.productTitle,
+                style: const TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(
-              widget.imageUrl,
-              fit: BoxFit.cover,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                widget.imageUrl,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),

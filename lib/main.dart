@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/Screens/product_detail_screen.dart';
 import 'package:shop_app/Screens/product_overview_screen.dart';
 
 void main() {
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(primary: Colors.purple, secondary: Colors.lime)),
       home: productOverviewScreen(),
+      routes: {
+        productDetailScreen.routeName: (contest) => const productDetailScreen()
+      },
     );
   }
 }
