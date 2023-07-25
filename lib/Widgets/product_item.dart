@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/Widgets/like_button.dart';
 
 class productItem extends StatefulWidget {
   final String id;
@@ -27,38 +28,28 @@ class _productItemState extends State<productItem> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      GridTile(
-        footer: GridTileBar(
-          backgroundColor: Colors.black54,
-          title: Text(
-            widget.productTitle,
-            textAlign: TextAlign.center,
+      ClipRRect(
+        borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+        child: GridTile(
+          footer: GridTileBar(
+            backgroundColor: Colors.black54,
+            title: Text(
+              widget.productTitle,
+              style: const TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              widget.imageUrl,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-        child: Image.network(
-          widget.imageUrl,
-          fit: BoxFit.cover,
-        ),
       ),
-      Positioned(
-          top: 6,
-          right: 6,
-          child: GestureDetector(
-            onTap: _toggleLike,
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _isLiked ? Colors.red : Colors.black54,
-              ),
-              child: Icon(
-                _isLiked ? Icons.favorite : Icons.favorite_border,
-                color: Colors.white,
-                size: 30,
-              ),
-            ),
-          )),
+      Positioned(top: 6, right: 6, child: LikeButton()),
     ]);
   }
 }
