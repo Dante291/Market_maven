@@ -6,7 +6,6 @@ class productDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final prductId = ModalRoute.of(context)?.settings.arguments as String;
     return const Placeholder();
   }
 }
