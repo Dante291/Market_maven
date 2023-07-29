@@ -12,6 +12,10 @@ class productDetailScreen extends StatelessWidget {
     final loadedProducts = Provider.of<Products>(context, listen: false)
         .items
         .firstWhere((element) => element.id == productID);
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(loadedProducts.title),
+      ),
+    );
   }
 }

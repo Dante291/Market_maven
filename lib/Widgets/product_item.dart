@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/Models/Product.dart';
 import 'package:shop_app/Screens/product_detail_screen.dart';
 import 'package:shop_app/Widgets/like_button.dart';
 
 class productItem extends StatefulWidget {
-  final String id;
-  final String productTitle;
-  final String imageUrl;
-
-  const productItem(
-      {super.key,
-      required this.id,
-      required this.productTitle,
-      required this.imageUrl});
-
   @override
   State<productItem> createState() => _productItemState();
 }
@@ -28,20 +20,21 @@ class _productItemState extends State<productItem> {
 
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
     return Stack(children: [
       ClipRRect(
         borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context)
-                .pushNamed(productDetailScreen.routeName, arguments: widget.id);
+            Navigator.of(context).pushNamed(productDetailScreen.routeName,
+                arguments: product.id);
           },
           child: GridTile(
             footer: GridTileBar(
               backgroundColor: Colors.black54,
               title: Text(
-                widget.productTitle,
+                product.title,
                 style: const TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
@@ -49,7 +42,7 @@ class _productItemState extends State<productItem> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                widget.imageUrl,
+                product.imageUrl,
                 fit: BoxFit.cover,
               ),
             ),

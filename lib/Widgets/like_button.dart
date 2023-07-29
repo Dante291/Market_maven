@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_app/Models/Product.dart';
 
 class LikeButton extends StatefulWidget {
   @override
@@ -6,7 +8,6 @@ class LikeButton extends StatefulWidget {
 }
 
 class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
-  bool _isLiked = false;
   late AnimationController animationController;
   late Animation<double> scaleAnimation;
 
@@ -32,18 +33,24 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _toggleLike() {
-    setState(() {
-      _isLiked = !_isLiked;
-    });
-
-    _isLiked ? animationController.forward() : animationController.reverse();
-  }
-
   @override
   Widget build(BuildContext context) {
+    // bool _isLiked=false;
+    final isfavourite = Provider.of<Product>(context);
+    void _toggleLike() {
+      setState(() {
+        isfavourite.ToggleFav();
+      });
+
+      isfavourite.isfav
+          ? animationController.forward()
+          : animationController.reverse();
+    }
+
     return GestureDetector(
-      onTap: _toggleLike,
+      onTap: () {
+        isfavourite.ToggleFav();
+      },
       child: AnimatedBuilder(
         animation: animationController,
         builder: (context, child) {
@@ -52,11 +59,11 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
             height: 60,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: _isLiked ? Colors.black54 : Colors.black54,
+              color: isfavourite.isfav ? Colors.black54 : Colors.black54,
             ),
             child: Icon(
               Icons.favorite,
-              color: _isLiked ? Colors.red : Colors.white,
+              color: isfavourite.isfav ? Colors.red : Colors.white,
               size: 30 * scaleAnimation.value,
             ),
           );
