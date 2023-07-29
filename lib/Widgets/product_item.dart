@@ -10,14 +10,6 @@ class productItem extends StatefulWidget {
 }
 
 class _productItemState extends State<productItem> {
-  bool _isLiked = false;
-
-  void _toggleLike() {
-    setState(() {
-      _isLiked = !_isLiked;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);

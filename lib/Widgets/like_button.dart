@@ -16,7 +16,7 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
 
     scaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
@@ -38,9 +38,7 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
     // bool _isLiked=false;
     final isfavourite = Provider.of<Product>(context);
     void _toggleLike() {
-      setState(() {
-        isfavourite.ToggleFav();
-      });
+      isfavourite.ToggleFav();
 
       isfavourite.isfav
           ? animationController.forward()
@@ -48,9 +46,7 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
     }
 
     return GestureDetector(
-      onTap: () {
-        isfavourite.ToggleFav();
-      },
+      onTap: _toggleLike,
       child: AnimatedBuilder(
         animation: animationController,
         builder: (context, child) {
