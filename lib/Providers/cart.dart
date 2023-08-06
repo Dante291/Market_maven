@@ -14,4 +14,34 @@ class cartItem {
   });
 }
 
-class Cart with ChangeNotifier {}
+class Cart with ChangeNotifier {
+  late Map<String, cartItem> _items;
+
+  Map<String, cartItem> get items {
+    return {..._items};
+  }
+
+  void addItem(
+    String productId,
+    String title,
+    double price,
+  ) {
+    if (_items.containsKey(productId)) {
+      _items.update(
+          productId,
+          (value) => cartItem(
+              id: value.id,
+              title: value.title,
+              quant: value.quant + 1,
+              price: value.price));
+    } else {
+      _items.putIfAbsent(
+          productId,
+          () => cartItem(
+              id: DateTime.now().toString(),
+              title: title,
+              quant: 1,
+              price: price));
+    }
+  }
+}
