@@ -11,14 +11,11 @@ class cartButton extends StatefulWidget {
 class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    bool _isclicked = false;
     final isfavourite = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
     void toggle() {
-      setState(() {
-        _isclicked = !_isclicked;
-        cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price);
-      });
+      isfavourite.Togglecart();
+      cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price);
     }
 
     return GestureDetector(
@@ -28,11 +25,11 @@ class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
           height: 45,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isfavourite.isfav ? Colors.black54 : Colors.black54,
+            color: isfavourite.isinCart ? Colors.black54 : Colors.black54,
           ),
           child: Icon(
             Icons.shopping_cart,
-            color: _isclicked ? Colors.pink : Colors.white,
+            color: isfavourite.isinCart ? Colors.blue : Colors.white,
             size: 25,
           ),
         ));
