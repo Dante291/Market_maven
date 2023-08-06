@@ -51,8 +51,8 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
         animation: animationController,
         builder: (context, child) {
           return Container(
-            width: 60,
-            height: 60,
+            width: 45,
+            height: 45,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isfavourite.isfav ? Colors.black54 : Colors.black54,
@@ -60,7 +60,7 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
             child: Icon(
               Icons.favorite,
               color: isfavourite.isfav ? Colors.red : Colors.white,
-              size: 30 * scaleAnimation.value,
+              size: 25 * scaleAnimation.value,
             ),
           );
         },

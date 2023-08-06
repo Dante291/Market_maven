@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/Models/Product.dart';
 import 'package:shop_app/Screens/product_detail_screen.dart';
+import 'cart_button.dart';
 import 'package:shop_app/Widgets/like_button.dart';
 
 class productItem extends StatefulWidget {
@@ -42,6 +43,7 @@ class _productItemState extends State<productItem> {
         ),
       ),
       Positioned(top: 6, right: 6, child: LikeButton()),
+      Positioned(top: 55, right: 6, child: cartButton())
     ]);
   }
 }
