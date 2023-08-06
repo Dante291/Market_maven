@@ -15,7 +15,9 @@ class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
     final cart = Provider.of<Cart>(context);
     void toggle() {
       isfavourite.Togglecart();
-      cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price);
+      isfavourite.isinCart
+          ? cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price)
+          : null;
     }
 
     return GestureDetector(

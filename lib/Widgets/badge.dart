@@ -8,7 +8,7 @@ class badge extends StatelessWidget {
 
   final Widget child;
   final String value;
-  final Color color = Colors.indigo;
+  final Color color = Colors.blue;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class badge extends StatelessWidget {
               value,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 15,
               ),
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/Providers/cart.dart';
 import 'package:shop_app/Providers/products.dart';
+import 'package:shop_app/Screens/cart_screen.dart';
 import 'package:shop_app/Screens/product_detail_screen.dart';
 import 'package:shop_app/Screens/product_overview_screen.dart';
 
@@ -22,13 +23,12 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'My Shop App',
-        theme: ThemeData(
-            colorScheme: ColorScheme.fromSwatch()
-                .copyWith(primary: Colors.purple, secondary: Colors.lime)),
+        theme: ThemeData(primarySwatch: Colors.brown),
         home: productOverviewScreen(),
         routes: {
           productDetailScreen.routeName: (contest) =>
-              const productDetailScreen()
+              const productDetailScreen(),
+          cartScreen.routename: (context) => cartScreen()
         },
       ),
     );
