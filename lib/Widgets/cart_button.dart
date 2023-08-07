@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/Providers/Product.dart';
+
 import 'package:shop_app/Providers/cart.dart';
+import 'package:shop_app/Providers/products.dart';
 
 class cartButton extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class cartButton extends StatefulWidget {
 class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    final m = Provider.of<Products>(context);
     final isfavourite = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
     void toggle() {

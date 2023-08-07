@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'Product.dart';
+import './Product.dart';
 
 class Products with ChangeNotifier {
+  bool isinCart = false;
   final List<Product> _items = [
     Product(
       id: 'p1',
@@ -46,6 +47,11 @@ class Products with ChangeNotifier {
   }
 
   void addProduct() {
+    notifyListeners();
+  }
+
+  void Togglecart() {
+    isinCart = !isinCart;
     notifyListeners();
   }
 }
