@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'Product.dart';
 
 class button with ChangeNotifier {
-  bool isinCarT = false;
+  final Product ad;
 
-  void Togglecart(bool x) {
-    x = isinCarT;
+  button(this.ad);
+
+  void Togglecart() {
+    ad.isinCart = false;
     notifyListeners();
   }
 }
