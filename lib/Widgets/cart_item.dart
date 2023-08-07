@@ -58,7 +58,7 @@ class CartItem extends StatelessWidget {
             ),
             title: Text(title),
             subtitle: Text(
-              'Total: \$${price * quant}',
+              'Price: \$${price * quant}',
               style: TextStyle(fontSize: 15),
             ),
             trailing: Text('$quant x', style: TextStyle(fontSize: 17)),
