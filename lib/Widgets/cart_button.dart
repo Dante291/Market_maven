@@ -18,7 +18,7 @@ class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
       isfavourite.isinCart
           ? cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price,
               isfavourite.imageUrl)
-          : null;
+          : cart.removeItem(isfavourite.id);
     }
 
     return GestureDetector(

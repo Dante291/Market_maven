@@ -35,27 +35,27 @@ class Cart with ChangeNotifier {
     return total;
   }
 
-  void addItem(String productId, String title, double price, String imageURL) {
-    if (_items.containsKey(productId)) {
-      _items.update(
-          productId,
-          (value) => cartItem(
-              id: value.id,
-              title: value.title,
-              quant: value.quant + 1,
-              price: value.price,
-              imageUrl: value.imageUrl));
-    } else {
-      _items.putIfAbsent(
-          productId,
-          () => cartItem(
-                id: DateTime.now().toString(),
-                title: title,
-                quant: 1,
-                price: price,
-                imageUrl: imageURL,
-              ));
-    }
+  void addItem(
+    String productId,
+    String title,
+    double price,
+    String imageURL,
+  ) {
+    _items.putIfAbsent(
+        productId,
+        () => cartItem(
+              id: DateTime.now().toString(),
+              title: title,
+              quant: 1,
+              price: price,
+              imageUrl: imageURL,
+            ));
+
+    notifyListeners();
+  }
+
+  void removeItem(productId) {
+    _items.remove(productId);
     notifyListeners();
   }
 }
