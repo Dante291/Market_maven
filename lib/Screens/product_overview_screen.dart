@@ -37,7 +37,7 @@ class _productOverviewScreenState extends State<productOverviewScreen> {
             itemBuilder: (_) => [
               const PopupMenuItem(
                 value: filterOptions.Favourites,
-                child: Text('Only favourites Products'),
+                child: Text('Show favourites Products'),
               ),
               const PopupMenuItem(
                 value: filterOptions.All,
