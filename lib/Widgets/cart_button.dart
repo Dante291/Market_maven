@@ -16,7 +16,8 @@ class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
     void toggle() {
       isfavourite.Togglecart();
       isfavourite.isinCart
-          ? cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price)
+          ? cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price,
+              isfavourite.imageUrl)
           : null;
     }
 
