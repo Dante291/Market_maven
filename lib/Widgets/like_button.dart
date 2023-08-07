@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/Models/Product.dart';
+import 'package:shop_app/Providers/Product.dart';
 
 class LikeButton extends StatefulWidget {
   @override
