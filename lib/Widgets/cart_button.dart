@@ -22,20 +22,21 @@ class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
           : cart.removeItem(isfavourite.id);
     }
 
-    return GestureDetector(
-        onTap: toggle,
-        child: Container(
-          width: 45,
-          height: 45,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: isfavourite.isinCart ? Colors.black54 : Colors.black54,
-          ),
-          child: Icon(
-            Icons.shopping_cart,
-            color: isfavourite.isinCart ? Colors.blue : Colors.white,
-            size: 25,
-          ),
-        ));
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isfavourite.isinCart ? Colors.black54 : Colors.black54,
+      ),
+      child: IconButton(
+        icon: Icon(
+          Icons.shopping_cart,
+          color: isfavourite.isinCart ? Colors.blue : Colors.white,
+          size: 25,
+        ),
+        onPressed: toggle,
+      ),
+    );
   }
 }
