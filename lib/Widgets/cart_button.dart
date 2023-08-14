@@ -32,7 +32,7 @@ class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
       child: IconButton(
         icon: Icon(
           Icons.shopping_cart,
-          color: isfavourite.isinCart ? Colors.blue : Colors.white,
+          color: Colors.white,
           size: 25,
         ),
         onPressed: toggle,
