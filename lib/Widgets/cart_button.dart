@@ -15,11 +15,9 @@ class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
     final isfavourite = Provider.of<Product>(context);
     final cart = Provider.of<Cart>(context);
     void toggle() {
-      isfavourite.Togglecart();
-      isfavourite.isinCart
-          ? cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price,
-              isfavourite.imageUrl)
-          : cart.removeItem(isfavourite.id);
+      // isfavourite.Togglecart();
+      cart.addItem(isfavourite.id, isfavourite.title, isfavourite.price,
+          isfavourite.imageUrl);
     }
 
     return Container(
@@ -30,13 +28,28 @@ class _cartButtonState extends State<cartButton> with TickerProviderStateMixin {
         color: isfavourite.isinCart ? Colors.black54 : Colors.black54,
       ),
       child: IconButton(
-        icon: Icon(
-          Icons.shopping_cart,
-          color: Colors.white,
-          size: 25,
-        ),
-        onPressed: toggle,
-      ),
+          icon: Icon(
+            Icons.shopping_cart,
+            color: Colors.white,
+            size: 25,
+          ),
+          onPressed: () {
+            toggle();
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                'Added to the item!',
+                style: TextStyle(fontSize: 20),
+              ),
+              duration: Duration(seconds: 2),
+              action: SnackBarAction(
+                label: 'UNDO',
+                onPressed: () {
+                  cart.removeItem(isfavourite.id);
+                },
+              ),
+            ));
+          }),
     );
   }
 }

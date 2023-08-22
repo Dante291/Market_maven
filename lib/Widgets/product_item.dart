@@ -14,6 +14,7 @@ class _productItemState extends State<productItem> {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context);
+
     return Stack(children: [
       ClipRRect(
         borderRadius: const BorderRadius.only(
