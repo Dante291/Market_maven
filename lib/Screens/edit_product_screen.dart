@@ -158,6 +158,10 @@ class _EditproductScreenState extends State<EditproductScreen> {
                           if (value!.isEmpty) {
                             return 'Please provide a value';
                           }
+                          if (!value.startsWith('http') &&
+                              !value.startsWith('https')) {
+                            return 'Please enter a valid URL';
+                          }
                           return null;
                         },
                         onSaved: (newValue) {
