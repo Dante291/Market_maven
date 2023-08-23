@@ -42,6 +42,10 @@ class _EditproductScreenState extends State<EditproductScreen> {
   }
 
   void _saveform() {
+    final isvalid = _form.currentState!.validate();
+    if (!isvalid) {
+      return;
+    }
     _form.currentState?.save();
     print(_editedproduct.id);
     print(_editedproduct.price);
@@ -81,6 +85,12 @@ class _EditproductScreenState extends State<EditproductScreen> {
                     onFieldSubmitted: (value) {
                       _pricefocusNode.requestFocus();
                     },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please provide a value';
+                      }
+                      return null;
+                    },
                     onSaved: (newValue) {
                       if (newValue != null) {
                         _editedproduct = Product(
@@ -101,6 +111,15 @@ class _EditproductScreenState extends State<EditproductScreen> {
                     keyboardType: TextInputType.number,
                     onFieldSubmitted: (value) {
                       _descriptionfocusNode.requestFocus();
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please provide a value';
+                      }
+                      if (double.tryParse(value) == null) {
+                        return 'Please enter a valid number.';
+                      }
+                      return null;
                     },
                     onSaved: (newValue) {
                       if (newValue != null) {
@@ -135,6 +154,12 @@ class _EditproductScreenState extends State<EditproductScreen> {
                         textInputAction: TextInputAction.done,
                         controller: imageURLcontroller,
                         focusNode: _imagefocusNode,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please provide a value';
+                          }
+                          return null;
+                        },
                         onSaved: (newValue) {
                           if (newValue != null) {
                             _editedproduct = Product(
