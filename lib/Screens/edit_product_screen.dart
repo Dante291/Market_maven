@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_app/Providers/Product.dart';
+import 'package:shop_app/Providers/products.dart';
 
 class EditproductScreen extends StatefulWidget {
   static const routename = '/edit_product';
@@ -29,10 +31,39 @@ class _EditproductScreenState extends State<EditproductScreen> {
     super.dispose();
   }
 
+  var _initValues = {
+    'title': '',
+    'price': '',
+    'imageURL': '',
+  };
+
+  var _isInit = true;
+
   @override
   void initState() {
     _imagefocusNode.addListener(_updateImageURL);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final productID =
+          ModalRoute.of(context)?.settings.arguments as String? ?? '';
+
+      if (productID != '') {
+        _editedproduct =
+            Provider.of<Products>(context, listen: false).findById(productID);
+        _initValues = {
+          'title': _editedproduct.title,
+          'price': _editedproduct.price.toString(),
+          'imageURL': '',
+        };
+        imageURLcontroller.text = _editedproduct.imageUrl;
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   void _updateImageURL() {
@@ -47,8 +78,14 @@ class _EditproductScreenState extends State<EditproductScreen> {
       return;
     }
     _form.currentState?.save();
-    print(_editedproduct.id);
-    print(_editedproduct.price);
+    if (_editedproduct.id != '') {
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(_editedproduct.id, _editedproduct);
+    } else {
+      Provider.of<Products>(context, listen: false).addProduct(_editedproduct);
+    }
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -79,6 +116,7 @@ class _EditproductScreenState extends State<EditproductScreen> {
                 GestureDetector(
                   onTap: () => _focusNode.requestFocus(_focusNode),
                   child: TextFormField(
+                    initialValue: _initValues['title'],
                     focusNode: _focusNode,
                     decoration: InputDecoration(labelText: 'Title'),
                     textInputAction: TextInputAction.next,
@@ -97,7 +135,8 @@ class _EditproductScreenState extends State<EditproductScreen> {
                             id: _editedproduct.id,
                             title: newValue,
                             imageUrl: _editedproduct.imageUrl,
-                            price: _editedproduct.price);
+                            price: _editedproduct.price,
+                            isfav: _editedproduct.isfav);
                       }
                     },
                   ),
@@ -105,6 +144,7 @@ class _EditproductScreenState extends State<EditproductScreen> {
                 GestureDetector(
                   onTap: () => _pricefocusNode.requestFocus(),
                   child: TextFormField(
+                    initialValue: _initValues['price'],
                     focusNode: _pricefocusNode,
                     decoration: InputDecoration(labelText: 'Price'),
                     textInputAction: TextInputAction.next,
@@ -125,9 +165,10 @@ class _EditproductScreenState extends State<EditproductScreen> {
                       if (newValue != null) {
                         _editedproduct = Product(
                             id: _editedproduct.id,
-                            title: newValue,
+                            title: _editedproduct.title,
                             imageUrl: _editedproduct.imageUrl,
-                            price: double.parse(newValue));
+                            price: double.parse(newValue),
+                            isfav: _editedproduct.isfav);
                       }
                     },
                   ),
@@ -168,9 +209,10 @@ class _EditproductScreenState extends State<EditproductScreen> {
                           if (newValue != null) {
                             _editedproduct = Product(
                                 id: _editedproduct.id,
-                                title: newValue,
+                                title: _editedproduct.title,
                                 imageUrl: newValue,
-                                price: _editedproduct.price);
+                                price: _editedproduct.price,
+                                isfav: _editedproduct.isfav);
                           }
                         },
                       ),
