@@ -73,7 +73,7 @@ class _EditproductScreenState extends State<EditproductScreen> {
     }
   }
 
-  void _saveform() {
+  void _saveform() async {
     final isvalid = _form.currentState!.validate();
     if (!isvalid) {
       return;
@@ -90,10 +90,11 @@ class _EditproductScreenState extends State<EditproductScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedproduct)
-          .catchError((error) {
-        return showDialog<Null>(
+      try {
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedproduct);
+      } catch (error) {
+        await showDialog<Null>(
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -109,12 +110,11 @@ class _EditproductScreenState extends State<EditproductScreen> {
             );
           },
         );
-      }).then((_) {
-        setState(() {
-          _isloading = false;
-        });
-        Navigator.of(context).pop();
+      }
+      setState(() {
+        _isloading = false;
       });
+      Navigator.of(context).pop();
     }
   }
 

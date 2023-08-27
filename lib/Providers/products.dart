@@ -44,19 +44,19 @@ class Products with ChangeNotifier {
     return _items.where((element) => element.isfav).toList();
   }
 
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     Uri url = Uri.parse(
-        "https://shop-app-82936-default-rtdb.asia-southeast1.firebasedatabase.app/products");
+        "https://shop-app-82936-default-rtdb.asia-southeast1.firebasedatabase.app/products.json");
     ;
-    return http
-        .post(url,
-            body: json.encode({
-              'title': product.title,
-              'price': product.price,
-              'imageURL': product.imageUrl,
-              'isfav': product.isfav
-            }))
-        .then((value) {
+    try {
+      final value = await http.post(url,
+          body: json.encode({
+            'title': product.title,
+            'price': product.price,
+            'imageURL': product.imageUrl,
+            'isfav': product.isfav
+          }));
+
       var newProduct = Product(
           id: json.decode(value.body)['name'],
           title: product.title,
@@ -64,9 +64,9 @@ class Products with ChangeNotifier {
           price: product.price);
       _items.add(newProduct);
       notifyListeners();
-    }).catchError((error) {
+    } catch (error) {
       throw error;
-    });
+    }
   }
 
   Product findById(String id) {
