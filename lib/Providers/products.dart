@@ -73,8 +73,17 @@ class Products with ChangeNotifier {
     return _items.firstWhere((product) => product.id == id);
   }
 
-  void updateProduct(String id, Product newProduct) {
+  Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((element) => element.id == id);
+    Uri url = Uri.parse(
+        "https://shop-app-82936-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json");
+    ;
+    await http.patch(url,
+        body: json.encode({
+          'title': newProduct.title,
+          'imageURL': newProduct.imageUrl,
+          'price': newProduct.price,
+        }));
     _items[prodIndex] = newProduct;
     notifyListeners();
   }

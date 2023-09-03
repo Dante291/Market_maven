@@ -21,7 +21,7 @@ class productOverviewScreen extends StatefulWidget {
 class _productOverviewScreenState extends State<productOverviewScreen> {
   var _showOnlyFav = false;
   var _isLoading = false;
-  var _isinit = false;
+
   @override
   void initState() {
     setState(() {

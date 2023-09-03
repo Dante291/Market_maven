@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/Providers/products.dart';
@@ -10,7 +8,7 @@ import 'package:shop_app/Widgets/userProductitem.dart';
 class UserProductScreen extends StatelessWidget {
   static const routename = '/user-product';
   Future<void> _refreshProducts(BuildContext context) async {
-    await Provider.of<Products>(context).fetchData();
+    await Provider.of<Products>(context, listen: false).fetchData();
   }
 
   @override
