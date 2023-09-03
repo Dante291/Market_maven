@@ -17,16 +17,13 @@ class orderScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: orderData.orders.isEmpty
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                  Text(
-                    'No orders yet!!',
-                    style: TextStyle(
-                        fontSize: 25, color: Theme.of(context).primaryColor),
-                  ),
-                ])
+          ? Center(
+              child: Text(
+              'No orders yet!!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 25, color: Theme.of(context).primaryColor),
+            ))
           : ListView.builder(
               itemBuilder: (context, index) =>
                   OrderItem(orderData.orders[index]),
