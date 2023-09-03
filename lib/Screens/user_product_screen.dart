@@ -29,9 +29,7 @@ class UserProductScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: RefreshIndicator(
-        onRefresh: () {
-          _refreshProducts(context);
-        },
+        onRefresh: () => _refreshProducts(context),
         child: Padding(
           padding: EdgeInsets.all(8),
           child: ListView.builder(
