@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import './Product.dart';
@@ -133,7 +132,8 @@ class Products with ChangeNotifier {
             id: prodID,
             title: prodData['title'],
             imageUrl: prodData['imageURL'],
-            price: prodData['price']));
+            price: prodData['price'],
+            isfav: prodData['isfav']));
       });
       _items = loadedProducts;
       notifyListeners();

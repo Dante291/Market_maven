@@ -35,18 +35,27 @@ class _LikeButtonState extends State<LikeButton> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final snackbar = ScaffoldMessenger.of(context);
     // bool _isLiked=false;
     final isfavourite = Provider.of<Product>(context);
     void _toggleLike() {
-      isfavourite.ToggleFav();
-
       isfavourite.isfav
           ? animationController.forward()
           : animationController.reverse();
     }
 
     return GestureDetector(
-      onTap: _toggleLike,
+      onTap: () async {
+        try {
+          await Provider.of<Product>(context, listen: false).ToggleFav();
+        } catch (error) {
+          snackbar.hideCurrentSnackBar();
+          snackbar.showSnackBar(
+              SnackBar(content: Text("Can not be added as favourite!!")));
+        }
+
+        _toggleLike();
+      },
       child: AnimatedBuilder(
         animation: animationController,
         builder: (context, child) {
