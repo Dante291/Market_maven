@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import './Product.dart';
@@ -78,28 +79,44 @@ class Products with ChangeNotifier {
     Uri url = Uri.parse(
         "https://shop-app-82936-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json");
     ;
-    try {
-      final response = await http.patch(url,
-          body: json.encode({
-            'title': newProduct.title,
-            'imageURL': newProduct.imageUrl,
-            'price': newProduct.price,
-          }));
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
-      if (response.statusCode != 200) {
-        throw Exception(
-            'Received status code ${response.statusCode}: ${response.body}');
-      }
-      _items[prodIndex] = newProduct;
-      notifyListeners();
-    } catch (error) {
-      throw error;
+
+    final response = await http.patch(url,
+        body: json.encode({
+          'title': newProduct.title,
+          'imageURL': newProduct.imageUrl,
+          'price': newProduct.price,
+        }));
+    print("Response status: ${response.statusCode}");
+    print("Response body: ${response.body}");
+    if (response.statusCode != 200) {
+      throw Exception(
+          'Received status code ${response.statusCode}: ${response.body}');
     }
+    _items[prodIndex] = newProduct;
+    notifyListeners();
   }
 
-  void DeleteProduct(String id) {
+  Future<void> DeleteProduct(String id) async {
+    Uri url = Uri.parse(
+        "https://shop-app-82936-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json");
+    ;
+    final existingProductindex = _items.indexWhere(
+      (element) => element.id == id,
+    );
+    Product? existingProduct = _items[existingProductindex];
     _items.removeWhere((element) => element.id == id);
+    notifyListeners();
+    final response = await http.delete(url);
+    print("Response status: ${response.statusCode}");
+    print("Response body: ${response.body}");
+    if (response.statusCode != 200) {
+      _items.insert(existingProductindex, existingProduct);
+      notifyListeners();
+      throw Exception(
+          'Received status code ${response.statusCode}: ${response.body}');
+    }
+    existingProduct = null;
+
     notifyListeners();
   }
 
