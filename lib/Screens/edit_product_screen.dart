@@ -126,11 +126,11 @@ class _EditproductScreenState extends State<EditproductScreen> {
           },
         );
       }
-      setState(() {
-        _isloading = false;
-      });
-      Navigator.of(context).pop();
     }
+    setState(() {
+      _isloading = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override

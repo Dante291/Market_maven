@@ -78,14 +78,24 @@ class Products with ChangeNotifier {
     Uri url = Uri.parse(
         "https://shop-app-82936-default-rtdb.asia-southeast1.firebasedatabase.app/products/$id.json");
     ;
-    await http.patch(url,
-        body: json.encode({
-          'title': newProduct.title,
-          'imageURL': newProduct.imageUrl,
-          'price': newProduct.price,
-        }));
-    _items[prodIndex] = newProduct;
-    notifyListeners();
+    try {
+      final response = await http.patch(url,
+          body: json.encode({
+            'title': newProduct.title,
+            'imageURL': newProduct.imageUrl,
+            'price': newProduct.price,
+          }));
+      print("Response status: ${response.statusCode}");
+      print("Response body: ${response.body}");
+      if (response.statusCode != 200) {
+        throw Exception(
+            'Received status code ${response.statusCode}: ${response.body}');
+      }
+      _items[prodIndex] = newProduct;
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
   }
 
   void DeleteProduct(String id) {
