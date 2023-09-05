@@ -4,10 +4,28 @@ import 'package:shop_app/Providers/orders.dart';
 import 'package:shop_app/Widgets/appDrawer.dart';
 import 'package:shop_app/Widgets/order_item.dart';
 
-class orderScreen extends StatelessWidget {
+class orderScreen extends StatefulWidget {
   static const routeName = '/order';
   const orderScreen({super.key});
 
+  @override
+  State<orderScreen> createState() => _orderScreenState();
+}
+
+class _orderScreenState extends State<orderScreen> {
+  var _isloading = false;
+  @override
+  void initState() {
+    _isloading = true;
+    Provider.of<Orders>(context, listen: false)
+        .fetchData()
+        .then((value) => setState(() {
+              _isloading = false;
+            }));
+    super.initState();
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
     final orderData = Provider.of<Orders>(context);
@@ -16,18 +34,22 @@ class orderScreen extends StatelessWidget {
         title: Text('Your Orders'),
       ),
       drawer: AppDrawer(),
-      body: orderData.orders.isEmpty
+      body: _isloading
           ? Center(
-              child: Text(
-              'No orders yet!!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 25, color: Theme.of(context).primaryColor),
-            ))
-          : ListView.builder(
-              itemBuilder: (context, index) =>
-                  OrderItem(orderData.orders[index]),
-              itemCount: orderData.orders.length),
+              child:
+                  CircularProgressIndicator()) // Center the CircularProgressIndicator
+          : orderData.orders.isEmpty
+              ? Center(
+                  child: Text(
+                  'No orders yet!!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 25, color: Theme.of(context).primaryColor),
+                ))
+              : ListView.builder(
+                  itemBuilder: (context, index) =>
+                      OrderItem(orderData.orders[index]),
+                  itemCount: orderData.orders.length),
     );
   }
 }
