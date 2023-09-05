@@ -30,7 +30,7 @@ class cartScreen extends StatelessWidget {
                     Spacer(),
                     Chip(
                       label: Text(
-                        '\$${cart.totalAmount}',
+                        '\$${cart.totalAmount.toStringAsFixed(2)}',
                         style: TextStyle(color: Colors.white),
                       ),
                       backgroundColor: Theme.of(context).primaryColor,
@@ -38,22 +38,7 @@ class cartScreen extends StatelessWidget {
                     SizedBox(
                       width: 4,
                     ),
-                    TextButton(
-                      onPressed: cart.items.isEmpty
-                          ? null
-                          : () {
-                              {
-                                Provider.of<Orders>(context, listen: false)
-                                    .addOrder(cart.items.values.toList(),
-                                        cart.totalAmount);
-                                cart.clear();
-                              }
-                            },
-                      child: Text(
-                        'Place Order',
-                        style: TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                    )
+                    placeOrderButton(cart: cart)
                   ]),
             ),
           ),
@@ -90,5 +75,47 @@ class cartScreen extends StatelessWidget {
                   ),
                 )
         ]));
+  }
+}
+
+class placeOrderButton extends StatefulWidget {
+  const placeOrderButton({
+    super.key,
+    required this.cart,
+  });
+
+  final Cart cart;
+
+  @override
+  State<placeOrderButton> createState() => _placeOrderButtonState();
+}
+
+class _placeOrderButtonState extends State<placeOrderButton> {
+  var _isloading = false;
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: (widget.cart.items.isEmpty || _isloading)
+          ? null
+          : () async {
+              setState(() {
+                _isloading = true;
+              });
+
+              await Provider.of<Orders>(context, listen: false).addOrder(
+                  widget.cart.items.values.toList(), widget.cart.totalAmount);
+
+              setState(() {
+                _isloading = false;
+              });
+              widget.cart.clear();
+            },
+      child: _isloading
+          ? CircularProgressIndicator()
+          : Text(
+              'Place Order',
+              style: TextStyle(fontWeight: FontWeight.w800),
+            ),
+    );
   }
 }
