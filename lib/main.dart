@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/Providers/auth.dart';
 
 import 'package:shop_app/Providers/cart.dart';
 import 'package:shop_app/Providers/orders.dart';
 import 'package:shop_app/Providers/products.dart';
+import 'package:shop_app/Screens/auth_screen.dart';
 import 'package:shop_app/Screens/cart_screen.dart';
 import 'package:shop_app/Screens/edit_product_screen.dart';
 import 'package:shop_app/Screens/order_screen.dart';
@@ -22,6 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => auth(),
+        ),
         ChangeNotifierProvider(create: (context) => Products()),
         ChangeNotifierProvider(create: (context) => Cart()),
         ChangeNotifierProvider(create: (context) => Orders()),
@@ -30,14 +35,14 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'My Shop App',
         theme: ThemeData(primarySwatch: Colors.brown),
-        home: productOverviewScreen(),
+        home: AuthScreen(),
         routes: {
           productDetailScreen.routeName: (contest) =>
               const productDetailScreen(),
           cartScreen.routename: (context) => cartScreen(),
           orderScreen.routeName: (context) => orderScreen(),
           UserProductScreen.routename: (context) => UserProductScreen(),
-          EditproductScreen.routename: (context) => EditproductScreen()
+          EditproductScreen.routename: (context) => EditproductScreen(),
         },
       ),
     );
