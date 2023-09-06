@@ -85,6 +85,25 @@ class _AuthCardState extends State<AuthCard> {
   // ignore: unused_field
   var _isloading = false;
   final _passwordController = TextEditingController();
+  void _showDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('An error occurred!'),
+          content: Text(message),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Okay'))
+          ],
+        );
+      },
+    );
+  }
+
   void _submit() async {
     if (!_formkey.currentState!.validate()) {
       return;
@@ -93,13 +112,34 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isloading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      await Provider.of<auth>(context, listen: false)
-          .login(_authData['email']!, _authData['password']!);
-    } else {
-      await Provider.of<auth>(context, listen: false)
-          .signup(_authData['email']!, _authData['password']!);
+    try {
+      if (_authMode == AuthMode.Login) {
+        await Provider.of<auth>(context, listen: false)
+            .login(_authData['email']!, _authData['password']!);
+      } else {
+        await Provider.of<auth>(context, listen: false)
+            .signup(_authData['email']!, _authData['password']!);
+      }
+    } catch (error) {
+      var errorMessage = 'Could not authenticate please try later';
+      if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find any user with that Email';
+      }
+      if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Incorrect password';
+      }
+      if (error.toString().contains('USER_DISABLED')) {
+        errorMessage = 'User is disabled';
+      }
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This Email is already in use';
+      }
+      if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'Incorrect Email';
+      }
+      _showDialog(errorMessage);
     }
+
     setState(() {
       _isloading = false;
     });

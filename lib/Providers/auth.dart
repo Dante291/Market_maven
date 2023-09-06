@@ -11,28 +11,43 @@ class auth extends ChangeNotifier {
   Future<void> signup(String email, String password) async {
     Uri url = Uri.parse(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAXILj9RL7nzf0pITiyxNcAYGu3lMdRWS4');
-    final response = await http.post(
-      url,
-      body: json.encode({
-        'email': email,
-        'password': password,
-        'returnSecureToken': true,
-      }),
-    );
-    print(json.decode(response.body));
+
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'email': email,
+          'password': password,
+          'returnSecureToken': true,
+        }),
+      );
+      final responsedata = (json.decode(response.body));
+      if (responsedata['error'] != null) {
+        throw Exception(responsedata['error']['message']);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
   Future<void> login(String email, String password) async {
     Uri url = Uri.parse(
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAXILj9RL7nzf0pITiyxNcAYGu3lMdRWS4');
-    final response = await http.post(
-      url,
-      body: json.encode({
-        'email': email,
-        'password': password,
-        'returnSecureToken': true,
-      }),
-    );
-    print(json.decode(response.body));
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'email': email,
+          'password': password,
+          'returnSecureToken': true,
+        }),
+      );
+      final responsedata = (json.decode(response.body));
+      if (responsedata['error'] != null) {
+        throw Exception(responsedata['error']['message']);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 }
