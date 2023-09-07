@@ -24,26 +24,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => auth(),
-        ),
+        ChangeNotifierProvider(create: (context) => auth()),
         ChangeNotifierProvider(create: (context) => Products()),
         ChangeNotifierProvider(create: (context) => Cart()),
         ChangeNotifierProvider(create: (context) => Orders()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'My Shop App',
-        theme: ThemeData(primarySwatch: Colors.brown),
-        home: AuthScreen(),
-        routes: {
-          productDetailScreen.routeName: (contest) =>
-              const productDetailScreen(),
-          cartScreen.routename: (context) => cartScreen(),
-          orderScreen.routeName: (context) => orderScreen(),
-          UserProductScreen.routename: (context) => UserProductScreen(),
-          EditproductScreen.routename: (context) => EditproductScreen(),
-        },
+      child: Consumer<auth>(
+        builder: (context, value, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'My Shop App',
+          theme: ThemeData(primarySwatch: Colors.brown),
+          home: value.isAuthenticated ? productOverviewScreen() : AuthScreen(),
+          routes: {
+            productDetailScreen.routeName: (contest) =>
+                const productDetailScreen(),
+            cartScreen.routename: (context) => cartScreen(),
+            orderScreen.routeName: (context) => orderScreen(),
+            UserProductScreen.routename: (context) => UserProductScreen(),
+            EditproductScreen.routename: (context) => EditproductScreen(),
+          },
+        ),
       ),
     );
   }
