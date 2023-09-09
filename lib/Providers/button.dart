@@ -8,6 +8,7 @@ class button with ChangeNotifier {
 
   void Togglecart() {
     ad.isinCart = false;
+    print(ad);
     notifyListeners();
   }
 }
