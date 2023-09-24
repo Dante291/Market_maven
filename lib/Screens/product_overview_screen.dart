@@ -32,6 +32,23 @@ class _productOverviewScreenState extends State<productOverviewScreen> {
       setState(() {
         _isLoading = false;
       });
+    }).catchError((error) {
+      showDialog<Null>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Something went wrong'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Okay'))
+            ],
+          );
+        },
+      );
     });
     super.initState();
   }

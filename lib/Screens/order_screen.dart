@@ -21,7 +21,25 @@ class _orderScreenState extends State<orderScreen> {
         .fetchData()
         .then((value) => setState(() {
               _isloading = false;
-            }));
+            }))
+        .catchError((_) {
+      showDialog<Null>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Something went wrong'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Okay'))
+            ],
+          );
+        },
+      );
+    });
     super.initState();
   }
 

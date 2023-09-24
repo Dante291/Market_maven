@@ -195,7 +195,7 @@ class _AuthCardState extends State<AuthCard> {
                   keyboardType: TextInputType.visiblePassword,
                   validator: (value) {
                     if (value!.isEmpty || value.length < 6) {
-                      return 'Invalid Email';
+                      return 'Invalid password';
                     }
                     ;
                   },
@@ -240,9 +240,30 @@ class _AuthCardState extends State<AuthCard> {
                   ),
                 TextButton(
                   onPressed: _switchauthMode,
-                  child: Text(
-                      (_authMode == AuthMode.Login ? 'Sign-In' : 'LogIn') +
-                          '  Instead'),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                width:
+                                    2.0, // Adjust the thickness of the line as needed
+                                color: Theme.of(context)
+                                    .primaryColor, // Specify the color of the line
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            _authMode == AuthMode.Login ? 'Sign-In' : 'LogIn',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                      Text(' Instead'),
+                    ],
+                  ),
                 )
               ],
             ),

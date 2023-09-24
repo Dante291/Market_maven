@@ -8,7 +8,26 @@ import 'package:shop_app/Widgets/userProductitem.dart';
 class UserProductScreen extends StatelessWidget {
   static const routename = '/user-product';
   Future<void> _refreshProducts(BuildContext context) async {
-    await Provider.of<Products>(context, listen: false).fetchData();
+    await Provider.of<Products>(context, listen: false)
+        .fetchData()
+        .catchError((_) {
+      showDialog<Null>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Something went wrong'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Okay'))
+            ],
+          );
+        },
+      );
+    });
   }
 
   @override
