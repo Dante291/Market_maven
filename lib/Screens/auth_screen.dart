@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -183,6 +183,7 @@ class _AuthCardState extends State<AuthCard> {
                       return 'Invalid Email';
                     }
                     ;
+                    return null;
                   },
                   onSaved: (newValue) {
                     _authData['email'] = newValue!;
@@ -198,6 +199,7 @@ class _AuthCardState extends State<AuthCard> {
                       return 'Invalid password';
                     }
                     ;
+                    return null;
                   },
                   onSaved: (newValue) {
                     _authData['password'] = newValue!;
@@ -213,6 +215,7 @@ class _AuthCardState extends State<AuthCard> {
                             if (value != _passwordController.text) {
                               return 'Password doesn\'t match';
                             }
+                            return null;
                           }
                         : null,
                   ),

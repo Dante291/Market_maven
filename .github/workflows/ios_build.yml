@@ -1,0 +1,42 @@
+name: Build and Release iOS App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+
+    - name: Install Dependencies
+      run: flutter pub get
+
+    - name: Build iOS App
+      run: flutter build ios --release --no-codesign
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ios-build
+        path: build/ios
+
+    - name: Set up gh CLI
+      uses: actions/setup-gh@v1
+
+    - name: Create Release
+      run: gh release create "v${{ github.run_number }}" ./build/ios/Runner.app --title "iOS App Release" --notes "This is an automated release, triggered by a recent push. This may or may not be stable, so please have a look at the stable release(s)."
