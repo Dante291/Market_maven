@@ -48,8 +48,7 @@ jobs:
         tag_name: ${{ github.run_number }}
         release_name: Release ${{ github.run_number }}
         draft: false
-        prerelease: false
-        token: ${{ secrets.MY_GITHUB_TOKEN }}
+        prerelease: false 
 
     - name: Upload Release Asset
       id: upload-release-asset
