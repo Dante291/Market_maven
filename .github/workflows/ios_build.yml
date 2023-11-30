@@ -49,6 +49,7 @@ jobs:
         release_name: Release ${{ github.run_number }}
         draft: false
         prerelease: false
+        token: ${{ secrets.MY_GITHUB_TOKEN }}
 
     - name: Upload Release Asset
       id: upload-release-asset
@@ -58,6 +59,8 @@ jobs:
         asset_path: ./build/ios/iphoneos/Runner.app.zip
         asset_name: ios-app.zip
         asset_content_type: application/zip
+        token: ${{ secrets.MY_GITHUB_TOKEN }}
+
 
   Android-Build-and-Release:
     name: Testing build for android
