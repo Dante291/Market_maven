@@ -35,8 +35,10 @@ jobs:
         name: ios-build
         path: build/ios
 
-    - name: Set up gh CLI
-      uses: actions/setup-gh@v1
+    - name: Set up Git
+      run: git config --global user.email "actions@github.com" && git config --global user.name "GitHub Actions"
 
     - name: Create Release
-      run: gh release create "v${{ github.run_number }}" ./build/ios/Runner.app --title "iOS App Release" --notes "This is an automated release, triggered by a recent push. This may or may not be stable, so please have a look at the stable release(s)."
+      run: |
+        TAG_NAME="v${{ github.run_number }}"
+        gh release create $TAG_NAME ./build/ios/Runner.app --title "iOS App Release" --notes "This is an automated release, triggered by a recent push. This may or may not be stable, so please have a look at the stable release(s)."
