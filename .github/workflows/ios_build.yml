@@ -6,58 +6,58 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: macos-latest
+  # build:
+  #   runs-on: macos-latest
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+  #   steps:
+  #   - name: Checkout Repository
+  #     uses: actions/checkout@v2
 
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
+  #   - name: Set up Flutter
+  #     uses: subosito/flutter-action@v2
+  #     with:
+  #       channel: 'stable'
 
-    - name: Install Dependencies
-      run: flutter pub get
+  #   - name: Install Dependencies
+  #     run: flutter pub get
 
-    - name: Build iOS App
-      run: flutter build ios --release --no-codesign
+  #   - name: Build iOS App
+  #     run: flutter build ios --release --no-codesign
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: ios-build
-        path: build/ios/iphoneos/Runner.app
+  #   - name: Upload Artifact
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: ios-build
+  #       path: build/ios/iphoneos/Runner.app
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
+  # release:
+  #   needs: build
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: Download Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: ios-build
-        path: build/ios
+  #   steps:
+  #   - name: Download Artifact
+  #     uses: actions/download-artifact@v2
+  #     with:
+  #       name: ios-build
+  #       path: build/ios
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      with:
-        tag_name: ${{ github.run_number }}
-        release_name: Release ${{ github.run_number }}
-        draft: false
-        prerelease: false
+  #   - name: Create Release
+  #     id: create_release
+  #     uses: actions/create-release@v1
+  #     with:
+  #       tag_name: ${{ github.run_number }}
+  #       release_name: Release ${{ github.run_number }}
+  #       draft: false
+  #       prerelease: false
 
-    - name: Upload Release Asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build/ios/iphoneos/Runner.app.zip
-        asset_name: ios-app.zip
-        asset_content_type: application/zip
+  #   - name: Upload Release Asset
+  #     id: upload-release-asset
+  #     uses: actions/upload-release-asset@v1
+  #     with:
+  #       upload_url: ${{ steps.create_release.outputs.upload_url }}
+  #       asset_path: ./build/ios/iphoneos/Runner.app.zip
+  #       asset_name: ios-app.zip
+  #       asset_content_type: application/zip
 
   Android-Build-and-Release:
     name: Testing build for android
